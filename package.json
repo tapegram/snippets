@@ -1,0 +1,10 @@
+{
+  "contributes": {
+    "snippets": [
+      {
+        "language": "unison",
+        "path": "./snippets.code-snippets"
+      }
+    ]
+  }
+}

@@ -1,0 +1,32 @@
+{
+	"newtype": {
+		"scope": "unison,u",
+		"prefix": "newtype",
+		"body": [
+			"type $1 = $1 ${2:Text}",
+			"$1.unwrap = cases $1 v -> v",
+			"$0"
+		],
+		"description": "Create a newtype and a function to unwrap it"
+	},
+	"ability": {
+		"scope": "unison,u",
+		"prefix": "ability",
+		"body": [
+			"ability $1 where",
+			"\tfoo : Text ->{$1} Text",
+			"",
+			"$1.run : '{g, $1} a -> {g, ${2:IO, Exception}} a",
+			"$1.run p =",
+			"\tgo : '{g, $1} a -> {g, ${2:IO, Exception}} a",
+			"\tgo p = handle !p with cases",
+			"\t\t{foo input -> resume} ->",
+			"\t\t\tresult = todo \"fill in the implementation\"",
+			"\t\t\tgo '(resume result)",
+			"\t\t{ k } -> k",
+			"\tgo p",
+			"$0",
+		],
+		"description": "Stub a new ability and a corresponding handler"
+	},
+}
