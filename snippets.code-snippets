@@ -29,4 +29,53 @@
 		],
 		"description": "Stub a new ability and a corresponding handler"
 	},
+	"routes": {
+		"scope": "unison,u",
+		"prefix": "routes",
+		"body": [
+			"$1.routes : '{Route, Log} ()",
+			"$1.routes =",
+			"\tuse Parser / s",
+			"\tuse Route <|>",
+			"\thelloWorld = do",
+			"\t\tname = route GET (s \"hello\" / Parser.text)",
+			"\t\tok.text (\"Hello, \" ++ name)",
+			"\thelloWorld",
+		],
+		"description": "Stub a routes function"
+	},
+	"deploy": {
+		"scope": "unison,u",
+		"prefix": "deploy",
+		"body": [
+			"deploy.deploy : '{IO, Exception} URI",
+			"deploy.deploy = Cloud.main do",
+			"\tenvironment = !Environment.default",
+			"\tdatabase = main.initializeStorage environment",
+			"\tserviceName = ServiceName.create \"$1\"",
+			"\tserviceHash = deployHttp environment (main database)",
+			"\tServiceName.assign serviceName serviceHash",
+			"",
+			"deploy.root : Text",
+			"deploy.root = \"\"",
+			"",
+			"main.initializeStorage : Environment ->{Exception, Cloud} Database",
+			"main.initializeStorage env =",
+			"\tdatabase = Database.create \"myDatabase\"",
+			"\tDatabase.assign database env",
+			"\tdatabase",
+			"",
+			"main.main :",
+			"\tDatabase",
+			"\t\t-> HttpRequest",
+			"\t\t->{Exception, State, Remote, Random, Log} HttpResponse",
+			"main.main db req =",
+			"\tuse Route <|>",
+			"\tRoute.run",
+			"\t\t(todo \"put routes here\")",
+			"\t\treq",
+
+		],
+		"description": "Stub the spine of the app with a deploy and main function"
+	},
 }
