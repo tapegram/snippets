@@ -87,9 +87,9 @@
 			"$1Id.unwrap = cases $1Id v -> v",
 
 			"ability $1CRUD where",
-				"upsert : $1 ->{$1CRUD} ()",
-				"get : $1Id ->{$1CRUD} (Optional $1)",
-				"delete : $1Id ->{$1CRUD} ()",
+				"\tupsert : $1 ->{$1CRUD} ()",
+				"\tget : $1Id ->{$1CRUD} (Optional $1)",
+				"\tdelete : $1Id ->{$1CRUD} ()",
 
 			"$1CRUD.run : Database -> '{g, $1CRUD} a -> {g, Remote} a",
 			"$1CRUD.run db p =",
