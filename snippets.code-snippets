@@ -78,4 +78,50 @@
 		],
 		"description": "Stub the spine of the app with a deploy and main function"
 	},
+	"crud": {
+		"scope": "unison,u",
+		"prefix": "crud",
+		"body": [
+			"type $1 = { id : $1Id }",
+			"type $1Id = $1Id Text",
+			"$1Id.unwrap = cases $1Id v -> v",
+
+			"ability $1CRUD where",
+				"upsert : $1 ->{$1CRUD} ()",
+				"get : $1Id ->{$1CRUD} (Optional $1)",
+				"delete : $1Id ->{$1CRUD} ()",
+
+			"$1CRUD.run : Database -> '{g, $1CRUD} a -> {g, Remote} a",
+			"$1CRUD.run db p =",
+				"\t$2s : BTree ($1Id) $1",
+				"\t$2s = BTree.named db \"$2s\" Universal.ordering",
+				
+				"\tget$1' : $1Id ->{g, Remote} (Optional $1)",
+				"\tget$1' $2Id = BTree.tryRead $2s $2Id",
+				
+				"\tupsert$1' : $1 ->{g, Remote} ()",
+				"\tupsert$1' $2 =",
+					"\t\t$2Id = $1.id $2",
+					"\t\tBTree.write $2s $2Id $2",
+				
+				"\tdelete$1' : $1Id ->{g, Remote} ()",
+				"\tdelete$1' $2Id =",
+					"\t\tBTree.delete $2s $2Id",
+					
+				"\tgo : '{g, CRUD} a -> {g, Remote} a",
+				"\tgo p = handle !p with cases",
+					"\t\t{upsert $2 -> resume} ->",
+						"\t\t\tresult = upsert$1' $2",
+						"\t\t\tgo '(resume result)",
+					"\t\t{get $2Id -> resume} ->",
+						"\t\t\tresult = get$1' $2Id",
+						"\t\t\tgo '(resume result)",
+					"\t\t{delete $2Id -> resume} ->",
+						"\t\t\tresult = delete$1' $2Id",
+						"\t\t\tgo '(resume result)",
+					"\t\t{ k } -> k",
+				"\tgo p"
+		],
+		"description": "Stub a crud ability with a handler."
+	},
 }
