@@ -82,6 +82,8 @@
 		"scope": "unison,u",
 		"prefix": "crud",
 		"body": [
+			"-- The data type we are operating on: $1",
+			"-- The variable name of the above type (probably just lowercase): $2",
 			"type $1 = { id : $1Id }",
 			"type $1Id = $1Id Text",
 			"$1Id.unwrap = cases $1Id v -> v",
@@ -108,7 +110,7 @@
 				"\tdelete$1' $2Id =",
 					"\t\tBTree.delete $2s $2Id",
 					
-				"\tgo : '{g, CRUD} a -> {g, Remote} a",
+				"\tgo : '{g, $1CRUD} a -> {g, Remote} a",
 				"\tgo p = handle !p with cases",
 					"\t\t{upsert $2 -> resume} ->",
 						"\t\t\tresult = upsert$1' $2",
