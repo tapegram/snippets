@@ -125,4 +125,18 @@
 		],
 		"description": "Stub a crud ability with a handler."
 	},
+	"json": {
+		"scope": "unison,u",
+		"prefix": "json",
+		"body": [
+			"$1.fromJson : '{Decoder} $1",
+			"$1.fromJson = do",
+  		"\tuse Decoder text",
+  		"\tuse object at!",
+  		"\tfoo = at! \"foo\" text",
+  		"\tbar = optionalAt! \"bar\" text",
+  		"\t$1 foo bar"
+		],
+		"description": "Stub a decoder for a JSON object"
+	},
 }
