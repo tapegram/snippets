@@ -25,7 +25,7 @@
 			"\t\t\tgo '(resume result)",
 			"\t\t{ k } -> k",
 			"\tgo p",
-			"$0",
+			"$0"
 		],
 		"description": "Stub a new ability and a corresponding handler"
 	},
@@ -40,7 +40,7 @@
 			"\thelloWorld = do",
 			"\t\tname = route GET (s \"hello\" / Parser.text)",
 			"\t\tok.text (\"Hello, \" ++ name)",
-			"\thelloWorld",
+			"\thelloWorld"
 		],
 		"description": "Stub a routes function"
 	},
@@ -73,8 +73,7 @@
 			"\tuse Route <|>",
 			"\tRoute.run",
 			"\t\t(todo \"put routes here\")",
-			"\t\treq",
-
+			"\t\treq"
 		],
 		"description": "Stub the spine of the app with a deploy and main function"
 	},
@@ -138,5 +137,5 @@
   		"\t$1 foo bar"
 		],
 		"description": "Stub a decoder for a JSON object"
-	},
+	}
 }
