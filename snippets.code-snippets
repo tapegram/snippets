@@ -1,7 +1,7 @@
 {
   "newtype": {
     "scope": "unison,u",
-    "prefix": ".newtype",
+    "prefix": "#newtype",
     "body": [
       "type $1 = $1 ${2:Text}",
       "$1.unwrap = cases $1 v -> v",
@@ -11,7 +11,7 @@
   },
   "ability": {
     "scope": "unison,u",
-    "prefix": ".ability",
+    "prefix": "#ability",
     "body": [
       "ability $1 where",
       "\tfoo : Text ->{$1} Text",
@@ -31,7 +31,7 @@
   },
   "routes": {
     "scope": "unison,u",
-    "prefix": ".routes",
+    "prefix": "#routes",
     "body": [
       "$1.routes : '{Route, Log} ()",
       "$1.routes =",
@@ -46,7 +46,7 @@
   },
   "deploy": {
     "scope": "unison,u",
-    "prefix": ".deploy",
+    "prefix": "#deploy",
     "body": [
       "deploy.deploy : '{IO, Exception} URI",
       "deploy.deploy = Cloud.main do",
@@ -79,7 +79,7 @@
   },
   "crud": {
     "scope": "unison,u",
-    "prefix": ".crud",
+    "prefix": "#crud",
     "body": [
       "-- The data type we are operating on: $1",
       "type $1 = { id : $1Id }",
@@ -126,7 +126,7 @@
   },
   "json": {
     "scope": "unison,u",
-    "prefix": ".json",
+    "prefix": "#json",
     "body": [
       "$1.fromJson : '{Decoder} $1",
       "$1.fromJson = do",
