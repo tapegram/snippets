@@ -4,6 +4,10 @@
       {
         "language": "unison",
         "path": "./snippets.code-snippets"
+      },
+      {
+        "language": "python",
+        "path": "./python-momentum.code-snippets"
       }
     ]
   }

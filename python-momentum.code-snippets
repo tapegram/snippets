@@ -1,0 +1,14 @@
+{
+  "test": {
+    "scope": "python,py",
+    "prefix": "!test",
+    "body": [
+      "from stewardship.apps.tests.cases import PortfolioTestCase",
+      "",
+      "class $1Test(PortfolioTestCase):",
+      "\tdef test(self):",
+      "\t\tself.fail("not implemented")",
+    ],
+    "description": "Stub a new test case using our portfolio tooling"
+  }
+}
