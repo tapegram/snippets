@@ -145,5 +145,37 @@
       "\t$1 foo bar"
     ],
     "description": "Stub a decoder for a JSON object"
+  },
+  "crudRoutes": {
+    "scope": "unison,u",
+    "prefix": "#crudRoutes",
+    "body": [
+      "$1s.routes : '{Route, Log, Exception} ()",
+      "$1s.routes =",
+      "\tget${1/(.*)/${1:/pascalcase}/}s = do",
+      "\t\t_ = Route.noCapture GET (Parser.s \"$1s\")",
+      "\t\t$1 \"Get all $1s\"",
+      "\t\tp [] [text \"render them as html\"] |> toText |> ok.html",
+      "\tpost${1/(.*)/${1:/pascalcase}/}s = do",
+      "\t\t_ = Route.noCapture POST (Parser.s \"$1s\")",
+      "\t\tformData = getFormData()",
+      "\t\t$1 \"Parse out form data, save, and return something\"",
+      "\t\tp [] [text \"done\"] |> toText |> ok.html",
+      "\tget${1/(.*)/${1:/pascalcase}/}= do",
+      "\t\t$1Id = route GET (Parser.s \"$1s\" / Parser.text)",
+      "\t\t$1 \"Get a single $1 using the id\"",
+      "\t\tp [] [text \"render it as html\"] |> toText |> ok.html",
+      "\tpost${1/(.*)/${1:/pascalcase}/}= do",
+      "\t\t$1Id = route POST (Parser.s \"$1s\" / Parser.text)",
+      "\t\tformData = getFormData()",
+      "\t\t$1 \"Parse out form data, save, and return something\"",
+      "\t\tp [] [text \"done\"] |> toText |> ok.html",
+      "\tdelete${1/(.*)/${1:/pascalcase}/}= do",
+      "\t\t$1Id = route DELETE (Parser.s \"$1s\" / Parser.text)",
+      "\t\t$1 \"Delete a single $1 using the id\"",
+      "\t\tp [] [text \"done\"] |> toText |> ok.html",
+      "\tget${1/(.*)/${1:/pascalcase}/}s <|> post${1/(.*)/${1:/pascalcase}/}s <|> get${1/(.*)/${1:/pascalcase}/} <|> post${1/(.*)/${1:/pascalcase}/} <|> delete${1/(.*)/${1:/pascalcase}/}",
+    ]
   }
 }
+
