@@ -176,6 +176,67 @@
       "\t\tp [] [text \"done\"] |> toText |> ok.html",
       "\tget${1/(.*)/${1:/pascalcase}/}s <|> post${1/(.*)/${1:/pascalcase}/}s <|> get${1/(.*)/${1:/pascalcase}/} <|> post${1/(.*)/${1:/pascalcase}/} <|> delete${1/(.*)/${1:/pascalcase}/}",
     ]
-  }
+  },
+  "model": {
+    "scope": "unison,u",
+    "prefix": "#model",
+    "body": [
+      "-- The data type we are operating on: $1",
+      "type $1 = { id : $1.Id }",
+      "type $1.Id = Id Text",
+      "$1.Id.unwrap = cases Id v -> v",
+    ],
+    "description": "Stub a model"
+  },
+  "crudAbility": {
+    "scope": "unison,u",
+    "prefix": "#crudAbility",
+    "body": [
+      "ability $1CRUD where",
+      "\tupsert : $1 ->{$1CRUD} ()",
+      "\tget : $1.Id ->{$1CRUD} (Optional $1)",
+      "\tdelete : $1.Id ->{$1CRUD} ()",
+      "\tgetAll : '{$1CRUD} (List $1)",
+      "",
+      "$1CRUD.run : Database -> '{g, $1CRUD} a -> {g, Remote} a",
+      "$1CRUD.run db p =",
+      "\t${1/(.*)/${1:/camelcase}/}s : OrderedTable ($1.Id) $1",
+      "\t${1/(.*)/${1:/camelcase}/}s = OrderedTable.named db \"${1/(.*)/${1:/camelcase}/}s\" Universal.ordering",
+      "",
+      "\tget$1' : $1.Id ->{g, Remote} (Optional $1)",
+      "\tget$1' ${1/(.*)/${1:/camelcase}/}Id = OrderedTable.tryRead ${1/(.*)/${1:/camelcase}/}s ${1/(.*)/${1:/camelcase}/}Id",
+      "",
+      
+      "\tgetAll' : '{g, Remote} (List $1)",
+      "\tgetAll' = do OrderedTable.toStream ${1/(.*)/${1:/camelcase}/}s |> Stream.map at2 |> Stream.toList",
+      "",
+      "\tupsert$1' : $1 ->{g, Remote} ()",
+      "\tupsert$1' ${1/(.*)/${1:/camelcase}/} =",
+      "\t\t${1/(.*)/${1:/camelcase}/}Id = $1.id ${1/(.*)/${1:/camelcase}/}",
+      "\t\tOrderedTable.write ${1/(.*)/${1:/camelcase}/}s ${1/(.*)/${1:/camelcase}/}Id ${1/(.*)/${1:/camelcase}/}",
+      "",
+      "\tdelete$1' : $1.Id ->{g, Remote} ()",
+      "\tdelete$1' ${1/(.*)/${1:/camelcase}/}Id =",
+      "\t\tOrderedTable.delete ${1/(.*)/${1:/camelcase}/}s ${1/(.*)/${1:/camelcase}/}Id",
+      "",
+      "\tgo : '{g, $1CRUD} a -> {g, Remote} a",
+      "\tgo p = handle !p with cases",
+      "\t\t{upsert ${1/(.*)/${1:/camelcase}/} -> resume} ->",
+      "\t\t\tresult = upsert$1' ${1/(.*)/${1:/camelcase}/}",
+      "\t\t\tgo '(resume result)",
+      "\t\t{get ${1/(.*)/${1:/camelcase}/}Id -> resume} ->",
+      "\t\t\tresult = get$1' ${1/(.*)/${1:/camelcase}/}Id",
+      "\t\t\tgo '(resume result)",
+      "\t\t{getAll _ -> resume} ->",
+      "\t\t\tresult = getAll' ()",
+      "\t\t\tgo '(resume result)",
+      "\t\t{delete ${1/(.*)/${1:/camelcase}/}Id -> resume} ->",
+      "\t\t\tresult = delete$1' ${1/(.*)/${1:/camelcase}/}Id",
+      "\t\t\tgo '(resume result)",
+      "\t\t{ k } -> k",
+      "\tgo p"
+    ],
+    "description": "Stub a crud ability with a handler."
+  },
 }
 
