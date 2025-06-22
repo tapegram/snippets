@@ -571,5 +571,18 @@
     ],
     "description": "Stub an authentication ability, handler, routes, components, and model. Small dependencies on WebAwesome components and some standard Unison libraries like Routes."
   },
+  "config": {
+    "scope": "unison,u",
+    "prefix": "#config",
+    "body": [
+"runConfig = Cloud.main do",
+"\tsecret  = \"secretvalue\"",
+"\tenv = Environment.named appName",
+"\tsetValue env \"secret.value\" secret"
+    ],
+    "description": "Stub the code to set an environment variable in the cloud. This should not be saved to your codebase."
+  },
 }
+
+
 
